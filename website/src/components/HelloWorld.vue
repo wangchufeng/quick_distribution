@@ -1,144 +1,153 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
+  <v-app id="inspire">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      clipped
     >
-      <v-flex xs12>
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        ></v-img>
-      </v-flex>
-
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
-        </p>
-      </v-flex>
-
-      <v-flex
-        mb-5
-        xs12
-      >
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
+      <v-list dense>
+        <v-list-item
+          v-for="item in items"
+          :key="item.text"
+          link
+        >
+          <v-list-item-action>
+            <!-- <v-icon>{{ item.icon }}</v-icon> -->
+            <v-icon>home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ item.text }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-subheader class="mt-4 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
+        <v-list>
+          <v-list-item
+            v-for="item in items2"
+            :key="item.text"
+            link
           >
-            {{ next.text }}
-          </a>
-        </v-layout>
-      </v-flex>
+            <v-list-item-avatar>
+              <img
+                :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`"
+                alt=""
+              >
+            </v-list-item-avatar>
+            <v-list-item-title v-text="item.text" />
+          </v-list-item>
+        </v-list>
+        <v-list-item
+          class="mt-4"
+          link
+        >
+          <v-list-item-action>
+            <v-icon color="grey darken-1">mdi-plus-circle-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-title class="grey--text text--darken-1">Browse Channels</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon color="grey darken-1">mdi-settings</v-icon>
+          </v-list-item-action>
+          <v-list-item-title class="grey--text text--darken-1">Manage Subscriptions</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-      <v-flex
-        xs12
-        mb-5
+    <v-app-bar
+      app
+      clipped-left
+      color="red"
+      dense
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-icon class="mx-4">fab fa-youtube</v-icon>
+      <v-toolbar-title class="mr-12 align-center">
+        <span class="title">Youtube</span>
+      </v-toolbar-title>
+      <v-spacer />
+      <v-row
+        align="center"
+        style="max-width: 650px"
       >
-        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
+        <v-text-field
+          :append-icon-cb="() => {}"
+          placeholder="Search..."
+          single-line
+          append-icon="search"
+          color="white"
+          hide-details
+        />
+      </v-row>
+    </v-app-bar>
 
-        <v-layout justify-center>
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-content>
+      <v-container class="fill-height">
+        <v-row
+          justify="center"
+          align="center"
+        >
+          <v-col class="shrink">
+            <v-tooltip right>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  :href="source"
+                  icon
+                  large
+                  target="_blank"
+                  v-on="on"
+                >
+                  <v-icon large>mdi-code-tags</v-icon>
+                </v-btn>
+              </template>
+              <span>Source</span>
+            </v-tooltip>
+            <v-tooltip right>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  icon
+                  large
+                  href="https://codepen.io/johnjleider/pen/aezMOO"
+                  target="_blank"
+                  v-on="on"
+                >
+                  <v-icon large>mdi-codepen</v-icon>
+                </v-btn>
+              </template>
+              <span>Codepen</span>
+            </v-tooltip>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-
-  data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader',
-      },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify',
-      },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
-      },
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com',
-      },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
-      },
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
-      },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined',
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-      },
-    ],
-  }),
-};
+  export default {
+    props: {
+      source: String,
+    },
+    data: () => ({
+      drawer: null,
+      items: [
+        { icon: 'home', text: 'Most Popular' },
+        { icon: 'subscriptions', text: 'Subscriptions' },
+        { icon: 'history', text: 'History' },
+        { icon: 'featured_play_list', text: 'Playlists' },
+        { icon: 'watch_later', text: 'Watch Later' },
+      ],
+      items2: [
+        { picture: 28, text: 'Joseph' },
+        { picture: 38, text: 'Apple' },
+        { picture: 48, text: 'Xbox Ahoy' },
+        { picture: 58, text: 'Nokia' },
+        { picture: 78, text: 'MKBHD' },
+      ],
+    }),
+    created () {
+      this.$vuetify.theme.dark = true
+    },
+  }
 </script>
