@@ -29,8 +29,6 @@
     </v-navigation-drawer>
 
     <v-content>
-      
-
       <v-container>
         <canvas id="canvas"></canvas>
         <VueDragResize :isActive="true" :isResizable="false">
